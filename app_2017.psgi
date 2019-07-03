@@ -3,12 +3,12 @@
 use strict;
 use warnings;
 use FindBin;
-BEGIN { FindBin::again() }
 use lib "$FindBin::Bin/lib/", "$FindBin::Bin/lib/pause_2017", "$FindBin::Bin/../pause-private/lib", "$FindBin::Bin/privatelib";
 use Plack::Builder;
 use Plack::App::Directory::Apaxy;
 use Path::Tiny;
-Log::Dispatch::Config->configure("$FindBin::Bin/etc/plack_log.conf.".($ENV{PLACK_ENV} // 'development'));
+my $app_dir = path(__FILE__)->parent;
+Log::Dispatch::Config->configure($app_dir->child("etc/plack_log.conf.".($ENV{PLACK_ENV} // 'development')));
 
 my $AppRoot = path(__FILE__)->parent->realpath;
 $ENV{MOJO_REVERSE_PROXY} = 1;
