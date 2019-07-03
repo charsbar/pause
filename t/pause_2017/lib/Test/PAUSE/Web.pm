@@ -145,6 +145,7 @@ sub reset_fixture {
 sub new {
   my ($class, %args) = @_;
 
+  delete $INC{'FindBin.pm'};
   my $psgi = $ENV{TEST_PAUSE_WEB_PSGI} // "app_2017.psgi";
   my $app = do "$AppRoot/$psgi";
 
