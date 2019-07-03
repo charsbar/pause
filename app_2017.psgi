@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use FindBin;
+BEGIN { FindBin::again() }
 use lib "$FindBin::Bin/lib/", "$FindBin::Bin/lib/pause_2017", "$FindBin::Bin/../pause-private/lib", "$FindBin::Bin/privatelib";
 use Plack::Builder;
 use Plack::App::Directory::Apaxy;
