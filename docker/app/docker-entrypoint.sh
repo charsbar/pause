@@ -1,17 +1,20 @@
 #!/bin/bash
 set -e
 
+AUTH="-u ${MYSQL_USER} --password=${MYSQL_ROOT_PASSWORD}"
+AUTH_DB="$AUTH ${MYSQL_DATABASE}"
+
 for i in 1 2 3 4 5 6 7 8 9 10
 do
-    mysqladmin -h mysql -u pause --password=test ping > /dev/null 2>&1 && break
+    mysqladmin -h mysql $AUTH ping > /dev/null 2>&1 && break
     sleep 10
 done
 
-if ! mysql -h mysql -u pause --password=test pause -e 'SELECT 1 FROM abrakadabra' > /dev/null 2>&1; then
-	mysql -h mysql -u pause --password=test pause < ./doc/authen_pause.schema.txt
+if ! mysql -h mysql $AUTH_DB -e 'SELECT 1 FROM abrakadabra' > /dev/null 2>&1; then
+	mysql -h mysql $AUTH_DB < ./doc/authen_pause.schema.txt
 fi
-if ! mysql -h mysql -u pause --password=test pause -e 'SELECT 1 FROM applymod' > /dev/null 2>&1; then
-	mysql -h mysql -u pause --password=test pause < ./doc/mod.schema.txt
+if ! mysql -h mysql $AUTH_DB -e 'SELECT 1 FROM applymod' > /dev/null 2>&1; then
+	mysql -h mysql $AUTH_DB < ./doc/mod.schema.txt
 fi
 
 cd /root
