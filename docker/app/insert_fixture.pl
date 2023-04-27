@@ -7,6 +7,11 @@ use PAUSE;
 use PAUSE::Crypt;
 use SQL::Maker;
 
+unless ($ENV{CREATE_TEST_USERS}) {
+  warn "CREATE_TEST_USERS ENV is not true, not creating test users!\n";
+  exit;
+}
+
 my @users = qw(TESTUSER TESTADMIN TESTCNSRD);
 
 my $maker = SQL::Maker->new(driver => 'mysql');
