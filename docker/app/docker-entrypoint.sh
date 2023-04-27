@@ -37,6 +37,7 @@ fi
 if [ ! -d /home/ftp/pub/PAUSE/PAUSE-git ]; then
     mkdir -p /home/ftp/pub/PAUSE/PAUSE-git
     cd /home/ftp/pub/PAUSE/PAUSE-git
+    git config --global init.defaultBranch main
     git init
     git config --global --add safe.directory /home/ftp/pub/PAUSE/PAUSE-git
     git config --global user.email "${FTP}"
