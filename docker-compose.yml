@@ -3,7 +3,6 @@ services:
     nginx:
         image: nginx:latest
         container_name: nginx
-        hostname: pause.localhost
         ports:
             - 80:80
             - 443:443
@@ -12,11 +11,13 @@ services:
         volumes:
             - ./htdocs:/var/www/html/
             - ./docker/tmp/ftp:/home/ftp
-            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+            - ./docker/nginx/conf.d/:/etc/nginx/templates
             - ./docker/nginx/ssl/server.key.txt:/etc/nginx/ssl/server.key
             - ./docker/nginx/ssl/server.crt.txt:/etc/nginx/ssl/server.crt
             - ./docker/nginx/ssl/server.csr.txt:/etc/nginx/ssl/server.csr
             - ./docker/nginx/ssl/server.password:/etc/nginx/ssl/server.password
+        environment:
+            NGINX_HOST: ${NGINX_HOST}
     app:
         build: ./docker/app
         container_name: app
@@ -31,22 +32,64 @@ services:
             - ./docker/app/gnupg.tar.gz:/root/gnupg.tar.gz
             - ./docker/app/crontab:/var/spool/cron/crontabs/root
         environment:
-            PAUSE_DEV_ROOT: /home/k/pause
-            PAUSE_DEV_EMAIL: pause@localhost.localdomain
-            PAUSE_DEV_DBUSER: pause
-            PAUSE_DEV_DBPASS: test
-            MH_SENDMAIL_SMTP_ADDR: mail:1025
-            GIT_DISCOVERY_ACROSS_FILESYSTEM: 1
+            MH_SENDMAIL_SMTP_ADDR: ${MH_SENDMAIL_SMTP_ADDR}
+            GIT_DISCOVERY_ACROSS_FILESYSTEM: ${GIT_DISCOVERY_ACROSS_FILESYSTEM}
+            MH_SENDMAIL_SMTP_ADDR: ${MH_SENDMAIL_SMTP_ADDR}
+            MH_STORAGE: ${MH_STORAGE}
+            MH_MAILDIR_PATH: ${MH_MAILDIR_PATH}
+            GIT_DISCOVERY_ACROSS_FILESYSTEM: ${GIT_DISCOVERY_ACROSS_FILESYSTEM}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            AUTHEN_DATA_SOURCE_NAME: ${AUTHEN_DATA_SOURCE_NAME}
+            AUTHEN_DATA_SOURCE_USER: ${AUTHEN_DATA_SOURCE_USER}
+            AUTHEN_DATA_SOURCE_PW: ${AUTHEN_DATA_SOURCE_PW}
+            MOD_DATA_SOURCE_NAME: ${MOD_DATA_SOURCE_NAME}
+            MOD_DATA_SOURCE_USER: ${MOD_DATA_SOURCE_USER}
+            MOD_DATA_SOURCE_PW: ${MOD_DATA_SOURCE_PW}
+            ADMIN: ${ADMIN}
+            CPAN_TESTERS: ${CPAN_TESTERS}
+            TO_CPAN_TESTERS: ${TO_CPAN_TESTERS}
+            REPLY_TO_CPAN_TESTERS: ${REPLY_TO_CPAN_TESTERS}
+            GONERS_NOTIFY: ${GONERS_NOTIFY}
+            P5P: ${P5P}
+            UPLOAD: ${UPLOAD}
+            ADMINS: ${ADMINS}
+            ML_CHOWN_USER: ${ML_CHOWN_USER}
+            ML_CHOWN_GROUP: ${ML_CHOWN_GROUP}
+            ML_MIN_INDEX_LINES: ${ML_MIN_INDEX_LINES}
+            ML_MIN_FILES: ${ML_MIN_FILES}
+            RUNDATA: ${RUNDATA}
+            HAVE_PERLBAL: ${HAVE_PERLBAL}
+            SLEEP: ${SLEEP}
+            PAUSE_LOG: ${PAUSE_LOG}
+            PAUSE_LOG_DIR: ${PAUSE_LOG_DIR}
+            INCOMING: ${INCOMING}
+            RECAPTCHA_ENABLED: ${RECAPTCHA_ENABLED}
+            CHECKSUMS_SIGNING_ARGS: ${CHECKSUMS_SIGNING_ARGS}
+            CHECKSUMS_SIGNING_KEY: ${CHECKSUMS_SIGNING_KEY}
+            BATCH_SIG_HOME: ${BATCH_SIG_HOME}
+            CREATE_TEST_USERS: ${CREATE_TEST_USERS}
+            FTP: ${FTP}
+
         depends_on:
             - mysql
     mysql:
         image: mysql:5.7
         container_name: mysql
         environment:
-            MYSQL_ROOT_PASSWORD: test
-            MYSQL_USER: pause
-            MYSQL_PASSWORD: test
-            MYSQL_DATABASE: pause
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            AUTHEN_DATA_SOURCE_NAME: ${AUTHEN_DATA_SOURCE_NAME}
+            AUTHEN_DATA_SOURCE_USER: ${AUTHEN_DATA_SOURCE_USER}
+            AUTHEN_DATA_SOURCE_PW: ${AUTHEN_DATA_SOURCE_PW}
+            MOD_DATA_SOURCE_NAME: ${MOD_DATA_SOURCE_NAME}
+            MOD_DATA_SOURCE_USER: ${MOD_DATA_SOURCE_USER}
+            MOD_DATA_SOURCE_PW: ${MOD_DATA_SOURCE_PW}
+
         expose:
             - 3306
     mail:
@@ -56,5 +99,5 @@ services:
             - 1025:1025
             - 8025:8025
         environment:
-            MH_STORAGE: maildir
-            MH_MAILDIR_PATH: /tmp
+            MH_STORAGE: ${MH_STORAGE}
+            MH_MAILDIR_PATH: ${MH_MAILDIR_PATH}

@@ -1,45 +1,48 @@
 package PrivatePAUSE;
-use File::Spec::Functions qw(catdir catfile);
+use strict;
+use warnings;
 
-my $Root  = $ENV{PAUSE_DEV_ROOT} // '/home/k/pause';
-my $Email = $ENV{PAUSE_DEV_EMAIL} // 'pause@localhost.localdomain';
+my @to_copy = qw(
+  AUTHEN_DATA_SOURCE_NAME
+  AUTHEN_DATA_SOURCE_USER
+  AUTHEN_DATA_SOURCE_PW
+  MOD_DATA_SOURCE_NAME
+  MOD_DATA_SOURCE_USER
+  MOD_DATA_SOURCE_PW
+  ADMIN
+  ADMINS
+  CPAN_TESTERS
+  TO_CPAN_TESTERS
+  REPLY_TO_CPAN_TESTERS
+  GONERS_NOTIFY
+  P5P
+  ML_CHOWN_USER
+  ML_CHOWN_GROUP
+  ML_MIN_INDEX_LINES
+  ML_MIN_FILES
+  RUNDATA
+  UPLOAD
+  HAVE_PERLBAL
+  SLEEP
+  PAUSE_LOG
+  PAUSE_LOG_DIR
+  INCOMING
+  RECAPTCHA_ENABLED
+  CHECKSUMS_SIGNING_ARGS
+  CHECKSUMS_SIGNING_KEY
+  BATCH_SIG_HOME
+);
 
-print STDERR "ENV: $_: $ENV{$_}\n" for sort keys %ENV;
+for my $item (@to_copy) {
+  unless (exists $ENV{$item}) {
+    warn "Missing $item from the environment! Your .env file might be incorrect...\n";
+  }
 
-print STDERR "Root: $Root\n";
-print STDERR "Email: $Email\n";
+  $PAUSE::Config->{$item} = $ENV{$item};
+}
 
-$PAUSE::Config->{AUTHEN_DATA_SOURCE_NAME} = 'dbi:mysql:pause;host=mysql';
-$PAUSE::Config->{AUTHEN_DATA_SOURCE_USER} = 'pause';
-$PAUSE::Config->{AUTHEN_DATA_SOURCE_PW} = 'test';
+$PAUSE::Config->{ADMINS} = split(',', $PAUSE::Config->{ADMINS});
 
-$PAUSE::Config->{MOD_DATA_SOURCE_NAME} = 'dbi:mysql:pause;host=mysql';
-$PAUSE::Config->{MOD_DATA_SOURCE_USER} = 'pause';
-$PAUSE::Config->{MOD_DATA_SOURCE_PW} = 'test';
-
-$PAUSE::Config->{DOCUMENT_ROOT} = catdir($Root, 'htdocs');
-$PAUSE::Config->{ADMIN} = $Email;
-$PAUSE::Config->{ADMINS} = [$Email];
-$PAUSE::Config->{CPAN_TESTERS} = $Email;
-$PAUSE::Config->{TO_CPAN_TESTERS} = $Email;
-$PAUSE::Config->{REPLY_TO_CPAN_TESTERS} = $Email;
-$PAUSE::Config->{GONERS_NOTIFY} = $Email;
-$PAUSE::Config->{P5P} = $Email;
-$PAUSE::Config->{ML_CHOWN_USER} = 'nobody';
-$PAUSE::Config->{ML_CHOWN_GROUP} = 'nogroup';
-$PAUSE::Config->{ML_MIN_INDEX_LINES} = 0;
-$PAUSE::Config->{ML_MIN_FILES} = 0;
-$PAUSE::Config->{RUNDATA} = '/usr/local/rundata';
-$PAUSE::Config->{UPLOAD} = $Email;
-$PAUSE::Config->{HAVE_PERLBAL} = 0;
-$PAUSE::Config->{SLEEP} = 1;
-$PAUSE::Config->{PAUSE_LOG} = '/var/log/paused.log';
-$PAUSE::Config->{PAUSE_LOG_DIR} = '/var/log';
-$PAUSE::Config->{INCOMING} = 'http://pause.localhost/incoming/';
-$PAUSE::Config->{RECAPTCHA_ENABLED} = 1 unless $ENV{TEST_HARNESS};
-$PAUSE::Config->{CHECKSUMS_SIGNING_ARGS} = '--homedir /root/.gnupg --clearsign --default-key';
-$PAUSE::Config->{CHECKSUMS_SIGNING_KEY} = 'A34B1DABBB49489C';
-$PAUSE::Config->{BATCH_SIG_HOME} = '/root/.gnupg';
-
+$PAUSE::Config->{RECAPTCHA_ENABLED} = $ENV{TEST_HARNESS} ? 0 : $ENV{RECAPTCHA_ENABLED};
 
 1;
