@@ -16,16 +16,16 @@ my @users = qw(TESTUSER TESTADMIN TESTCNSRD);
 
 my $maker = SQL::Maker->new(driver => 'mysql');
 
-my $dbh = DBI->connect("dbi:mysql:pause;host=mysql", $ENV{PAUSE_DEV_DBUSER}, $ENV{PAUSE_DEV_DBPASS}, {
+my $dbh = DBI->connect($ENV{AUTHEN_DATA_SOURCE_NAME}, $ENV{MYSQL_USER}, $ENV{MYSQL_ROOT_PASSWORD}, {
 	AutoCommit => 1,
 	PrintError => 0,
 	RaiseError => 1,
 	ShowErrorStatement => 1,
 });
 {
-    $dbh->do('TRUNCATE pause.usertable');
+    $dbh->do('TRUNCATE usertable');
     for my $user (@users) {
-        my ($sql, @bind) = $maker->insert('pause.usertable', {
+        my ($sql, @bind) = $maker->insert('usertable', {
             user => $user,
             password => PAUSE::Crypt::hash_password('test'),
             secretemail => lc($user) . '@localhost',
@@ -35,14 +35,14 @@ my $dbh = DBI->connect("dbi:mysql:pause;host=mysql", $ENV{PAUSE_DEV_DBUSER}, $EN
 	    path($user_dir)->mkpath;
     }
     $dbh->do('TRUNCATE grouptable');
-    my ($sql, @bind) = $maker->insert('pause.grouptable', {user => 'TESTADMIN', ugroup => 'admin'});
+    my ($sql, @bind) = $maker->insert('grouptable', {user => 'TESTADMIN', ugroup => 'admin'});
     $dbh->do($sql, undef, @bind);
 }
 
 {
-    $dbh->do('TRUNCATE pause.users');
+    $dbh->do('TRUNCATE users');
     for my $user (@users) {
-        my ($sql, @bind) = $maker->insert('pause.users', {
+        my ($sql, @bind) = $maker->insert('users', {
             userid => $user,
             fullname => "$user Name",
             email => ($user eq "TESTCNSRD" ? "CENSORED" : (lc($user) . '@localhost')),
