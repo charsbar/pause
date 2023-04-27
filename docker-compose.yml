@@ -31,22 +31,22 @@ services:
             - ./docker/app/gnupg.tar.gz:/root/gnupg.tar.gz
             - ./docker/app/crontab:/var/spool/cron/crontabs/root
         environment:
-            PAUSE_DEV_ROOT: /home/k/pause
-            PAUSE_DEV_EMAIL: pause@localhost.localdomain
-            PAUSE_DEV_DBUSER: pause
-            PAUSE_DEV_DBPASS: test
-            MH_SENDMAIL_SMTP_ADDR: mail:1025
-            GIT_DISCOVERY_ACROSS_FILESYSTEM: 1
+            PAUSE_DEV_ROOT: ${PAUSE_DEV_ROOT}
+            PAUSE_DEV_EMAIL: ${PAUSE_DEV_EMAIL}
+            PAUSE_DEV_DBUSER: ${PAUSE_DEV_DBUSER}
+            PAUSE_DEV_DBPASS: ${PAUSE_DEV_DBPASS}
+            MH_SENDMAIL_SMTP_ADDR: ${MH_SENDMAIL_SMTP_ADDR}
+            GIT_DISCOVERY_ACROSS_FILESYSTEM: ${GIT_DISCOVERY_ACROSS_FILESYSTEM}
         depends_on:
             - mysql
     mysql:
         image: mysql:5.7
         container_name: mysql
         environment:
-            MYSQL_ROOT_PASSWORD: test
-            MYSQL_USER: pause
-            MYSQL_PASSWORD: test
-            MYSQL_DATABASE: pause
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
         expose:
             - 3306
     mail:
@@ -56,5 +56,5 @@ services:
             - 1025:1025
             - 8025:8025
         environment:
-            MH_STORAGE: maildir
-            MH_MAILDIR_PATH: /tmp
+            MH_STORAGE: ${MH_STORAGE}
+            MH_MAILDIR_PATH: ${MH_MAILDIR_PATH}
