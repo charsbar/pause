@@ -54,4 +54,4 @@ cpm install -g
 
 perl ./bin/paused --pidfile=/var/run/paused.pid &
 
-plackup ./app_2017.psgi
+plackup -s Starman --pid=/var/run/pause_web.pid ./app_2017.psgi
