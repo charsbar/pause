@@ -39,7 +39,7 @@ if [ ! -d /home/ftp/pub/PAUSE/PAUSE-git ]; then
     cd /home/ftp/pub/PAUSE/PAUSE-git
     git init
     git config --global --add safe.directory /home/ftp/pub/PAUSE/PAUSE-git
-    git config --global user.email "pause@localhost.localdomain"
+    git config --global user.email "${FTP}"
     git config --global user.name "PAUSE-git"
     cd /home/k/pause
 fi

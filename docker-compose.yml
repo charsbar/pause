@@ -75,6 +75,7 @@ services:
             CHECKSUMS_SIGNING_KEY: ${CHECKSUMS_SIGNING_KEY}
             BATCH_SIG_HOME: ${BATCH_SIG_HOME}
             CREATE_TEST_USERS: ${CREATE_TEST_USERS}
+            FTP: ${FTP}
 
         depends_on:
             - mysql
