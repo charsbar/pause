@@ -10,6 +10,7 @@ use SQL::Maker;
 my @users = qw(TESTUSER TESTADMIN TESTCNSRD);
 
 my $maker = SQL::Maker->new(driver => 'mysql');
+
 my $dbh = DBI->connect("dbi:mysql:pause;host=mysql", $ENV{PAUSE_DEV_DBUSER}, $ENV{PAUSE_DEV_DBPASS}, {
 	AutoCommit => 1,
 	PrintError => 0,

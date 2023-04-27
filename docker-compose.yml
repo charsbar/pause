@@ -31,12 +31,50 @@ services:
             - ./docker/app/gnupg.tar.gz:/root/gnupg.tar.gz
             - ./docker/app/crontab:/var/spool/cron/crontabs/root
         environment:
-            PAUSE_DEV_ROOT: ${PAUSE_DEV_ROOT}
-            PAUSE_DEV_EMAIL: ${PAUSE_DEV_EMAIL}
             PAUSE_DEV_DBUSER: ${PAUSE_DEV_DBUSER}
             PAUSE_DEV_DBPASS: ${PAUSE_DEV_DBPASS}
             MH_SENDMAIL_SMTP_ADDR: ${MH_SENDMAIL_SMTP_ADDR}
             GIT_DISCOVERY_ACROSS_FILESYSTEM: ${GIT_DISCOVERY_ACROSS_FILESYSTEM}
+            PAUSE_DEV_DBUSER: ${PAUSE_DEV_DBUSER}
+            PAUSE_DEV_DBPASS: ${PAUSE_DEV_DBPASS}
+            MH_SENDMAIL_SMTP_ADDR: ${MH_SENDMAIL_SMTP_ADDR}
+            MH_STORAGE: ${MH_STORAGE}
+            MH_MAILDIR_PATH: ${MH_MAILDIR_PATH}
+            GIT_DISCOVERY_ACROSS_FILESYSTEM: ${GIT_DISCOVERY_ACROSS_FILESYSTEM}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            AUTHEN_DATA_SOURCE_NAME: ${AUTHEN_DATA_SOURCE_NAME}
+            AUTHEN_DATA_SOURCE_USER: ${AUTHEN_DATA_SOURCE_USER}
+            AUTHEN_DATA_SOURCE_PW: ${AUTHEN_DATA_SOURCE_PW}
+            MOD_DATA_SOURCE_NAME: ${MOD_DATA_SOURCE_NAME}
+            MOD_DATA_SOURCE_USER: ${MOD_DATA_SOURCE_USER}
+            MOD_DATA_SOURCE_PW: ${MOD_DATA_SOURCE_PW}
+            DOCUMENT_ROOT: ${DOCUMENT_ROOT}
+            ADMIN: ${ADMIN}
+            CPAN_TESTERS: ${CPAN_TESTERS}
+            TO_CPAN_TESTERS: ${TO_CPAN_TESTERS}
+            REPLY_TO_CPAN_TESTERS: ${REPLY_TO_CPAN_TESTERS}
+            GONERS_NOTIFY: ${GONERS_NOTIFY}
+            P5P: ${P5P}
+            UPLOAD: ${UPLOAD}
+            ADMINS: ${ADMINS}
+            ML_CHOWN_USER: ${ML_CHOWN_USER}
+            ML_CHOWN_GROUP: ${ML_CHOWN_GROUP}
+            ML_MIN_INDEX_LINES: ${ML_MIN_INDEX_LINES}
+            ML_MIN_FILES: ${ML_MIN_FILES}
+            RUNDATA: ${RUNDATA}
+            HAVE_PERLBAL: ${HAVE_PERLBAL}
+            SLEEP: ${SLEEP}
+            PAUSE_LOG: ${PAUSE_LOG}
+            PAUSE_LOG_DIR: ${PAUSE_LOG_DIR}
+            INCOMING: ${INCOMING}
+            RECAPTCHA_ENABLED: ${RECAPTCHA_ENABLED}
+            CHECKSUMS_SIGNING_ARGS: ${CHECKSUMS_SIGNING_ARGS}
+            CHECKSUMS_SIGNING_KEY: ${CHECKSUMS_SIGNING_KEY}
+            BATCH_SIG_HOME: ${BATCH_SIG_HOME}
+
         depends_on:
             - mysql
     mysql:
