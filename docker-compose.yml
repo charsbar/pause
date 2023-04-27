@@ -32,12 +32,8 @@ services:
             - ./docker/app/gnupg.tar.gz:/root/gnupg.tar.gz
             - ./docker/app/crontab:/var/spool/cron/crontabs/root
         environment:
-            PAUSE_DEV_DBUSER: ${PAUSE_DEV_DBUSER}
-            PAUSE_DEV_DBPASS: ${PAUSE_DEV_DBPASS}
             MH_SENDMAIL_SMTP_ADDR: ${MH_SENDMAIL_SMTP_ADDR}
             GIT_DISCOVERY_ACROSS_FILESYSTEM: ${GIT_DISCOVERY_ACROSS_FILESYSTEM}
-            PAUSE_DEV_DBUSER: ${PAUSE_DEV_DBUSER}
-            PAUSE_DEV_DBPASS: ${PAUSE_DEV_DBPASS}
             MH_SENDMAIL_SMTP_ADDR: ${MH_SENDMAIL_SMTP_ADDR}
             MH_STORAGE: ${MH_STORAGE}
             MH_MAILDIR_PATH: ${MH_MAILDIR_PATH}
