@@ -64,4 +64,4 @@ chmod 0600 /var/spool/cron/crontabs/root
 exec rsyslogd &
 exec cron -L1 &
 
-plackup ./app_2017.psgi
+starman --workers 1 -E development --pid=/var/run/pause_web.pid ./app_2017.psgi

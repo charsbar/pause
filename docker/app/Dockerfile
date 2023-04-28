@@ -14,7 +14,7 @@ RUN apt-get update && \
     chmod +x cpm && mv cpm /usr/local/bin && \
     curl -skL --compressed https://cpanmin.us > cpanm && \
     chmod +x cpanm && mv cpanm /usr/local/bin && \
-    cpanm -n IPC::Run && \
+    cpanm -n IPC::Run Starman && \
     curl -skL https://raw.githubusercontent.com/andk/pause/master/cpanfile > cpanfile && \
 #    cpm install -g
     cpanm --installdeps -n .
