@@ -18,6 +18,7 @@ services:
             - ./docker/nginx/ssl/server.password:/etc/nginx/ssl/server.password
         environment:
             NGINX_HOST: ${NGINX_HOST}
+        hostname: ${NGINX_HOST}
     app:
         build: ./docker/app
         container_name: app
