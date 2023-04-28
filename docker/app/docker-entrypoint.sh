@@ -58,4 +58,10 @@ cpm install -g
 
 perl ./bin/paused --pidfile=/var/run/paused.pid &
 
+# Or cron won't run it...
+chmod 0600 /var/spool/cron/crontabs/root
+
+exec rsyslogd &
+exec cron -L1 &
+
 plackup ./app_2017.psgi
