@@ -41,7 +41,7 @@ for my $item (@to_copy) {
   $PAUSE::Config->{$item} = $ENV{$item};
 }
 
-$PAUSE::Config->{ADMINS} = split(',', $PAUSE::Config->{ADMINS});
+$PAUSE::Config->{ADMINS} = [ split(',', $PAUSE::Config->{ADMINS}) ];
 
 $PAUSE::Config->{RECAPTCHA_ENABLED} = $ENV{TEST_HARNESS} ? 0 : $ENV{RECAPTCHA_ENABLED};
 
