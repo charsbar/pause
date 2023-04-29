@@ -20,7 +20,9 @@ services:
             NGINX_HOST: ${NGINX_HOST}
         hostname: ${NGINX_HOST}
     app:
-        build: ./docker/app
+        build:
+            context: ./docker/app
+            dockerfile: Dockerfile.centos7
         container_name: app
         ports:
             - 5000:5000

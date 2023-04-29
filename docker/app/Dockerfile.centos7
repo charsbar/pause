@@ -1,0 +1,20 @@
+FROM centos:7
+WORKDIR /home/k/pause
+RUN yum install -y \
+    make gcc curl perl perl-core ssh git gpg gpg-agent openssl unzip bzip2 ca-certificates crontabs rsyslog \
+    openssl-devel zlib-devel expat-devel libxml2-devel mariadb-libs mariadb-devel which procps \
+    mariadb \
+    nano && \
+    yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm && \
+    yum install -y --enablerepo=remi golang && \
+	go install github.com/mailhog/mhsendmail@latest && mv /root/go/bin/mhsendmail /usr/sbin/sendmail && \
+    curl -skL --compressed https://git.io/cpm > cpm && \
+    chmod +x cpm && mv cpm /usr/local/bin && \
+    curl -skL --compressed https://cpanmin.us > cpanm && \
+    chmod +x cpanm && mv cpanm /usr/local/bin && \
+    cpanm -n IPC::Run Log::Dispatchouli@2.023 && \
+    curl -skL https://raw.githubusercontent.com/andk/pause/master/cpanfile > cpanfile && \
+#    cpm install -g
+    cpanm --installdeps -n .
+COPY ./docker-entrypoint.centos7.sh /
+ENTRYPOINT ["/docker-entrypoint.centos7.sh"]

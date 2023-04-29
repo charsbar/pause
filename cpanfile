@@ -28,7 +28,7 @@ requires 'JSON::XS';
 requires 'LWP';
 requires 'List::MoreUtils';
 requires 'Log::Dispatch::Config';
-requires 'Log::Dispatchouli';
+requires 'Log::Dispatchouli', '== 2.023';
 requires 'Mail::Send';
 requires 'Module::Signature';
 requires 'MojoX::Log::Dispatch::Simple';
