@@ -45,6 +45,11 @@ sub hostname {
   $PAUSE::Config->{SERVER_NAME} || Sys::Hostname::hostname();
 }
 
+sub secret {
+  my $self = shift;
+  $PAUSE::Config->{WEB_SECRET} || $self->hostname;
+}
+
 sub log {
   my ($self, $arg) = @_;
   $self->logger->log(%$arg)
