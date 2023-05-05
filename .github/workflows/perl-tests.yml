@@ -22,7 +22,7 @@ jobs:
         # Actions, but not how... -- rjbs, 2023-05-05
         run: |
           apt update
-          apt install -y rsync mariadb-server mariadb-client
+          apt install -y rsync mariadb-server mariadb-client libssl-dev zlib1g-dev libexpat1-dev libxml2-dev libmariadb-dev-compat 
       - name: Install prereqs (cpanm, pinned versions)
         # PAUSE is run (for now?) on v5.16, and the latest versions from the
         # CPAN don't install on v5.16, so we install these version that do.
