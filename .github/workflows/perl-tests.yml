@@ -22,7 +22,7 @@ jobs:
         # Actions, but not how... -- rjbs, 2023-05-05
         run: |
           apt update
-          apt install -y rsync mariadb-server mariadb-client libssl-dev zlib1g-dev libexpat1-dev libxml2-dev libmariadb-dev-compat 
+          apt install -y rsync mariadb-server mariadb-client
       - name: Install prereqs (cpanm, pinned versions)
         # PAUSE is run (for now?) on v5.16, and the latest versions from the
         # CPAN don't install on v5.16, so we install these version that do.
@@ -36,6 +36,20 @@ jobs:
         # installing via cpanm that could, instead, be installed from apt.  I
         # may do that later, but for now, it's fine! -- rjbs, 2023-01-07
         run: cpanm --notest --installdeps .
-      - name: Run prove
+#      - name: Install yath and JUnit renderer
+#        run: cpanm --notest Test2::Harness Test2::Harness::Renderer::JUnit
+      - name: Run the tests
         run: |
           NO_PERL_CRITIC=1 prove -lr t
+#        # We disable Test::Perl::Critic because of a bug in
+#        # Test2::Harness::Renderer::JUnit.  See:
+#        # https://github.com/cpanel/Test2-Harness-Renderer-JUnit/issues/16
+#        # -- rjbs, 2023-05-05
+#        run: |
+#          NO_PERL_CRITIC=1 JUNIT_TEST_FILE="/tmp/test-output.xml" ALLOW_PASSING_TODOS=1 yath test --renderer=Formatter --renderer=JUnit -D
+#      - name: Publish test report
+#        uses: mikepenz/action-junit-report@v3
+#        if: always() # always run even if the previous step fails
+#        with:
+#          check_name: JUnit Report
+#          report_paths: /tmp/test-output.xml
