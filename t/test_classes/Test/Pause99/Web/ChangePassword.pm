@@ -25,7 +25,6 @@ sub test_basic : Tests(5) {
     $m->change_passwd->change_passwd__submit( 'moo', 'moo' );
     $m->mech->content_like( qr/New password stored and enabled/,
         "New password message shown" );
-    diag $m->mech->content;
 
     # 401 if we re-use old credentials
     $m->homepage;
