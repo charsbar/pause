@@ -45,7 +45,7 @@ jobs:
         # https://github.com/cpanel/Test2-Harness-Renderer-JUnit/issues/16
         # -- rjbs, 2023-05-05
         run: |
-          NO_PERL_CRITIC=1 JUNIT_TEST_FILE="/tmp/test-output.xml" ALLOW_PASSING_TODOS=1 yath test --renderer=Formatter --renderer=JUnit -D
+          NO_PERL_CRITIC=1 JUNIT_TEST_FILE="/tmp/test-output.xml" ALLOW_PASSING_TODOS=1 yath test --renderer=Formatter --renderer=JUnit --post-exit-timeout=60 -D
       - name: Publish test report
         uses: mikepenz/action-junit-report@v3
         if: always() # always run even if the previous step fails
